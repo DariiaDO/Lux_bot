@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "B/IvnkruZ0RPB7N5/YuRVf7Ng+0Ol4ci9A5mCKW7hpf9zAYmY87c1d3eKOgVhEf5kQqZOsnr/7tcqYjcBeg2Zw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Junior\\Documents\\lux_bot\\lux_bot\\lux_bot.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Junior\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\Junior\\.nuget\\packages\\sixlabors.imagesharp\\3.1.2\\sixlabors.imagesharp.3.1.2.nupkg.sha512",
+    "C:\\Users\\Junior\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
