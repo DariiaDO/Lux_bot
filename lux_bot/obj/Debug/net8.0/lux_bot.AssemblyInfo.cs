@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("lux_bot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f8f52b4ab8227a21015fd0d10dc13d5b8ab2307d")]
 [assembly: System.Reflection.AssemblyProductAttribute("lux_bot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("lux_bot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
