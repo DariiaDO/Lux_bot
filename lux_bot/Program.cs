@@ -14,7 +14,7 @@ namespace ConsoleApp1
 {
     class Program
     {
-        private static int Sib = 0; private static int Mosc = 0; private static int Dolb = 0;
+        private static Dictionary<long, int> Sib = new Dictionary<long, int>(); private static Dictionary<long, int> Mosc = new Dictionary<long, int>(); private static Dictionary<long, int> Dolb = new Dictionary<long, int>();
         private static long waitingForPhotoFromChatId = 0;
         private static string usersSelectedProcessingMethod = "0";
         private static Dictionary<long, string> userAnswers = new Dictionary<long, string>();
@@ -79,6 +79,7 @@ namespace ConsoleApp1
 
                     if (message.Text.ToLower().Contains("тест: на каких ты люксах?"))
                     {
+                        Sib[message.Chat.Id] = 0; Dolb[message.Chat.Id] = 0; Mosc[message.Chat.Id] = 0;
                         var inlineKeyboard = new InlineKeyboardMarkup(new[]
                            { new[]{
                                          InlineKeyboardButton.WithCallbackData("1", "drink"),
@@ -157,15 +158,15 @@ namespace ConsoleApp1
                     Console.WriteLine($"Получен ответ на 1 вопрос от {callbackQuery.Message.Chat.FirstName}");
                     if (callbackQuery.Data == "drink")
                         {
-                            Dolb++;
+                            Dolb[callbackQuery.Message.Chat.Id]++;
                         }
                         else if (callbackQuery.Data == "eat")
                         {
-                            Mosc++;
+                            Mosc[callbackQuery.Message.Chat.Id]++;
                         }
                         else if (callbackQuery.Data == "food")
                         {
-                            Sib++;
+                            Sib[callbackQuery.Message.Chat.Id]++;
                         }
                         var inlineKeyboardMarkup = new InlineKeyboardMarkup(new[]
                         {
@@ -173,7 +174,8 @@ namespace ConsoleApp1
                         InlineKeyboardButton.WithCallbackData("2", "turkish"),
                         InlineKeyboardButton.WithCallbackData("3", "chocolate")
                      });
-                        await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вопрос 2: Жадина-говядина...\n 1 - Соленый огурец\n 2 - Турецкий Барабан\n 3 - Пустая шоколадина", replyMarkup: inlineKeyboardMarkup);
+                    Console.WriteLine($"У {callbackQuery.Message.Chat.FirstName} Sib = {Sib[callbackQuery.Message.Chat.Id]} Dolb = {Dolb[callbackQuery.Message.Chat.Id]} Mosc = {Mosc[callbackQuery.Message.Chat.Id]}");
+                    await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вопрос 2: Жадина-говядина...\n 1 - Соленый огурец\n 2 - Турецкий Барабан\n 3 - Пустая шоколадина", replyMarkup: inlineKeyboardMarkup);
 
                     }
                     if (callbackQuery.Data == "cucumber" || callbackQuery.Data == "turkish" || callbackQuery.Data == "chocolate")
@@ -181,15 +183,15 @@ namespace ConsoleApp1
                     Console.WriteLine($"Получен ответ на 2 вопрос от {callbackQuery.Message.Chat.FirstName}");
                     if (callbackQuery.Data == "chocolate")
                         {
-                            Dolb++;
+                            Dolb[callbackQuery.Message.Chat.Id]++;
                         }
                         else if (callbackQuery.Data == "turkish")
                         {
-                            Mosc++;
+                             Mosc[callbackQuery.Message.Chat.Id]++;
                         }
                         else if (callbackQuery.Data == "cucumber")
                         {
-                            Sib++;
+                             Sib[callbackQuery.Message.Chat.Id]++;
                         }
                         var inlineKeyboardMarkup = new InlineKeyboardMarkup(new[]
                         {
@@ -197,7 +199,8 @@ namespace ConsoleApp1
                             InlineKeyboardButton.WithCallbackData("2", "huega"),
                             InlineKeyboardButton.WithCallbackData("3", "brain")
                          });
-                        await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вопрос 3: Основные принципы ООП???\n 1 -Наследование, инкапсуляция, полиморфизм и абстракция\n 2 - Кручу верчу пентагон взломать хочу\n 3 - Причем тут люкс и ООП...", replyMarkup: inlineKeyboardMarkup);
+                    Console.WriteLine($"У {callbackQuery.Message.Chat.FirstName} Sib = {Sib[callbackQuery.Message.Chat.Id]} Dolb = {Dolb[callbackQuery.Message.Chat.Id]} Mosc = {Mosc[callbackQuery.Message.Chat.Id]}");
+                    await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вопрос 3: Основные принципы ООП???\n 1 -Наследование, инкапсуляция, полиморфизм и абстракция\n 2 - Кручу верчу пентагон взломать хочу\n 3 - Причем тут люкс и ООП...", replyMarkup: inlineKeyboardMarkup);
 
                     }
                 if (callbackQuery.Data == "proga" || callbackQuery.Data == "huega" || callbackQuery.Data == "brain")
@@ -205,15 +208,15 @@ namespace ConsoleApp1
                     Console.WriteLine($"Получен ответ на 3 вопрос от {callbackQuery.Message.Chat.FirstName}");
                     if (callbackQuery.Data == "huega")
                     {
-                        Dolb++;
+                        Dolb[callbackQuery.Message.Chat.Id]++;
                     }
                     else if (callbackQuery.Data == "proga")
                     {
-                        Mosc++;
+                        Mosc[callbackQuery.Message.Chat.Id]++;
                     }
                     else if (callbackQuery.Data == "brain")
                     {
-                        Sib++;
+                        Sib[callbackQuery.Message.Chat.Id]++;
                     }
 
                     var inlineKeyboardMarkup = new InlineKeyboardMarkup(new[]
@@ -227,6 +230,7 @@ namespace ConsoleApp1
                     {
                         await botClient.SendPhotoAsync(callbackQuery.Message.Chat.Id, photoStream);
                     }
+                    Console.WriteLine($"У {callbackQuery.Message.Chat.FirstName} Sib = {Sib[callbackQuery.Message.Chat.Id]} Dolb = {Dolb[callbackQuery.Message.Chat.Id]} Mosc = {Mosc[callbackQuery.Message.Chat.Id]}");
                     await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вопрос 4: Какой это цвет?\n 1 - Фиолетовый\n 2 - Серо-буро-малиновый\n 3 - Цвет одиночества и жалких попыток выразить свою индивидуальность\n 4 - зеленый", replyMarkup: inlineKeyboardMarkup);
 
                 }
@@ -245,6 +249,7 @@ namespace ConsoleApp1
                     {
                         await botClient.SendPhotoAsync(callbackQuery.Message.Chat.Id, photoStream);
                     }
+                    Console.WriteLine($"У {callbackQuery.Message.Chat.FirstName} Sib = {Sib[callbackQuery.Message.Chat.Id]} Dolb = {Dolb[callbackQuery.Message.Chat.Id]} Mosc = {Mosc[callbackQuery.Message.Chat.Id]}");
                     await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вопрос 4: Какой это цвет?\n 1 - Фиолетовый\n 2 - Серо-буро-малиновый\n 3 - Цвет одиночества и жалких попыток выразить свою индивидуальность\n 4 - Зеленый", replyMarkup: inlineKeyboardMarkup);
 
                 }
@@ -253,15 +258,15 @@ namespace ConsoleApp1
                     Console.WriteLine($"Получен ответ на 4 вопрос от {callbackQuery.Message.Chat.FirstName}");
                     if (callbackQuery.Data == "violet")
                     {
-                        Dolb++;
+                        Dolb[callbackQuery.Message.Chat.Id]++;
                     }
                     else if (callbackQuery.Data == "gray")
                     {
-                        Mosc++;
+                        Mosc[callbackQuery.Message.Chat.Id]++;
                     }
                     else if (callbackQuery.Data == "depression")
                     {
-                        Sib++;
+                        Sib[callbackQuery.Message.Chat.Id]++;
                     }
 
                     var inlineKeyboardMarkup = new InlineKeyboardMarkup(new[]
@@ -270,7 +275,7 @@ namespace ConsoleApp1
                             InlineKeyboardButton.WithCallbackData("2", "romcom"),
                             InlineKeyboardButton.WithCallbackData("3", "dusnila")
                          });
-                    Console.WriteLine($"У {callbackQuery.Message.Chat.FirstName} Sib = {Sib} Dolb = {Dolb} Mosc = {Mosc}");
+                    Console.WriteLine($"У {callbackQuery.Message.Chat.FirstName} Sib = {Sib[callbackQuery.Message.Chat.Id]} Dolb = {Dolb[callbackQuery.Message.Chat.Id]} Mosc = {Mosc[callbackQuery.Message.Chat.Id]}");
                     await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вопрос 5: Твои глаза, как...\n 1 - в рекламе Виши\n 2 - самое прекрасное, что я видел на свете\n 3 - глаза, чего выдумывать то", replyMarkup: inlineKeyboardMarkup);
 
                 }
@@ -279,18 +284,18 @@ namespace ConsoleApp1
                     Console.WriteLine($"Получен ответ на 5 вопрос от {callbackQuery.Message.Chat.FirstName}");
                     if (callbackQuery.Data == "dusnila")
                     {
-                        Dolb++;
+                        Dolb[callbackQuery.Message.Chat.Id]++;
                     }
                     else if (callbackQuery.Data == "romcom")
                     {
-                        Mosc++;
+                        Mosc[callbackQuery.Message.Chat.Id]++;
                     }
                     else if (callbackQuery.Data == "ariana")
                     {
-                        Sib++;
+                        Sib[callbackQuery.Message.Chat.Id]++;
                     }
-                    Console.WriteLine($"У {callbackQuery.Message.Chat.FirstName} Sib = {Sib} Dolb = {Dolb} Mosc = {Mosc}");
-                    if (Dolb > Mosc && Dolb > Sib)
+                    Console.WriteLine($"У {callbackQuery.Message.Chat.FirstName} Sib = {Sib[callbackQuery.Message.Chat.Id]} Dolb = {Dolb[callbackQuery.Message.Chat.Id]} Mosc = {Mosc[callbackQuery.Message.Chat.Id]}");
+                    if (Dolb[callbackQuery.Message.Chat.Id] > Mosc[callbackQuery.Message.Chat.Id] && Dolb[callbackQuery.Message.Chat.Id] > Sib[callbackQuery.Message.Chat.Id])
                     {
                         Console.WriteLine("Выпал первый вариант");
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вы прошли тест! Ваш результат:");
@@ -300,7 +305,7 @@ namespace ConsoleApp1
                         }
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вы сидите на очень тяжелых люксах. Удачи с кодированием");
                     }
-                    if (Mosc > Dolb && Mosc > Sib)
+                    if (Mosc[callbackQuery.Message.Chat.Id] > Dolb[callbackQuery.Message.Chat.Id] && Mosc[callbackQuery.Message.Chat.Id] > Sib[callbackQuery.Message.Chat.Id])
                     {
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вы прошли тест! Ваш результат:");
                         using (Stream photoStream = System.IO.File.OpenRead(@"C:\Users\Junior\Desktop\var2.jpg"))
@@ -310,7 +315,7 @@ namespace ConsoleApp1
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Она выглядит как mommy, среди всех в этом клабе\r\nЕё вид всегда шикарен, на ней сидит всё идеально\r\nУ неё всегда всё, окей, ты должен ей открыть дверь\r\nСумка Birkin, она твёркает, что ты скажешь ей теперь?");
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Короче ебанутые люксы");
                     }
-                    if (Sib > Mosc && Sib > Dolb)
+                    if (Sib[callbackQuery.Message.Chat.Id] > Mosc[callbackQuery.Message.Chat.Id] && Sib[callbackQuery.Message.Chat.Id] > Dolb[callbackQuery.Message.Chat.Id])
                     {
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вы прошли тест! Ваш результат:");
                         using (Stream photoStream = System.IO.File.OpenRead(@"C:\Users\Junior\Desktop\var3.jpg"))
@@ -319,7 +324,7 @@ namespace ConsoleApp1
                         }
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вот она, настоящая slavic girl. И люксы у вас самые slavic");
                     }
-                    if (Sib == Mosc && Sib > Dolb)
+                    if (Sib[callbackQuery.Message.Chat.Id] == Mosc[callbackQuery.Message.Chat.Id] && Sib[callbackQuery.Message.Chat.Id] > Dolb[callbackQuery.Message.Chat.Id])
                     {
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вы прошли тест! Ваш результат:");
                         using (Stream photoStream = System.IO.File.OpenRead(@"C:\Users\Junior\Desktop\var4.jpg"))
@@ -328,7 +333,7 @@ namespace ConsoleApp1
                         }
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "О, Ваше Высочество, вы имеете по-настоящему изысканный вкус! Таких изящных люксов я еще ни у кого не видела...");
                     }
-                    if (Dolb == Mosc && Dolb > Sib)
+                    if (Dolb[callbackQuery.Message.Chat.Id] == Mosc[callbackQuery.Message.Chat.Id] && Dolb[callbackQuery.Message.Chat.Id] > Sib[callbackQuery.Message.Chat.Id])
                     {
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вы прошли тест! Ваш результат:");
                         using (Stream photoStream = System.IO.File.OpenRead(@"C:\Users\Junior\Desktop\var5.jpg"))
@@ -337,7 +342,7 @@ namespace ConsoleApp1
                         }
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Ваши люксы в простонародье зовутся понтами");
                     }
-                    if (Dolb == Sib && Dolb > Mosc)
+                    if (Dolb[callbackQuery.Message.Chat.Id] == Sib[callbackQuery.Message.Chat.Id] && Dolb[callbackQuery.Message.Chat.Id] > Mosc[callbackQuery.Message.Chat.Id])
                     {
                         await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, "Вы прошли тест! Ваш результат:");
                         using (Stream photoStream = System.IO.File.OpenRead(@"C:\Users\Junior\Desktop\var6.jpg"))
